@@ -81,14 +81,15 @@ Bracket.Utilities = {
 	MakeDraggable = function(Dragger, Object, OnChange, OnEnd)
 		local Position, StartPosition = nil, nil
 
-		Dragger.InputBegan:Connect(function(Input)
-			if Input.UserInputType == Enum.UserInputType.MouseButton1 then
-				Position = UserInputService:GetMouseLocation()
-				StartPosition = Object.AbsolutePosition
-			end
-		end)
+Dragger.InputBegan:Connect(function(Input)
+    if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
+        Position = Input.Position
+        StartPosition = Object.AbsolutePosition
+    end
+end)
+
 		UserInputService.InputChanged:Connect(function(Input)
-			if StartPosition and Input.UserInputType == Enum.UserInputType.MouseMovement then
+if StartPosition and (Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch) then
 				local Mouse = UserInputService:GetMouseLocation()
 				local Delta = Mouse - Position
 				Position = Mouse
